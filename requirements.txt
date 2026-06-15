@@ -2,11 +2,11 @@ fastapi
 uvicorn
 sqlmodel
 pydantic
-python-dotenv
 groq
 langchain
 langchain-groq
 pandas
+python-dotenv
+httpx
 plotly
 streamlit
-httpx
