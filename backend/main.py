@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.database import create_db_and_tables
 from backend.routers.grades import router as grades_router
 
-app = FastAPI(title="GradePulse API")
+app = FastAPI(title="GradePulse", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,4 +21,4 @@ def on_startup():
 
 @app.get("/")
 def root():
-    return {"message": "GradePulse API is running"}
+    return {"message": "GradePulse backend is running"}

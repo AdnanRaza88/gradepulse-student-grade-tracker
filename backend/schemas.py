@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import Optional, List
 
 class GradeCreate(BaseModel):
@@ -8,6 +8,13 @@ class GradeCreate(BaseModel):
     total_marks: float
     semester: str
     notes: Optional[str] = None
+
+    @field_validator('marks_obtained', 'total_marks')
+    @classmethod
+    def validate_marks(cls, v):
+        if v < 0:
+            raise ValueError('Marks cannot be negative')
+        return v
 
 class GradeResponse(BaseModel):
     id: int

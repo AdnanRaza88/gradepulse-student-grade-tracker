@@ -1,7 +1,5 @@
-from groq import Groq
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,14 +8,18 @@ llm = ChatGroq(model="llama3-70b-8192", temperature=0.7)
 
 def get_study_tips(subject: str, marks: float, total: float) -> str:
     prompt = ChatPromptTemplate.from_template(
-        "Student scored {marks}/{total} in {subject}. Give personalized, encouraging study tips."
+        "A student scored {marks} out of {total} in {subject}. "
+        "Provide clear, practical and encouraging study advice to help improve performance."
     )
     chain = prompt | llm
-    return chain.invoke({"marks": marks, "total": total, "subject": subject}).content
+    response = chain.invoke({"marks": marks, "total": total, "subject": subject})
+    return response.content
 
 def get_daily_routine(subject: str, marks: float) -> str:
     prompt = ChatPromptTemplate.from_template(
-        "Create a complete daily study routine for a student weak in {subject} with {marks}% score. Include study hours, water intake, breaks, health tips."
+        "Create a realistic daily study schedule for a student who scored {marks}% in {subject}. "
+        "Include study time, breaks, revision methods and basic health suggestions."
     )
     chain = prompt | llm
-    return chain.invoke({"subject": subject, "marks": marks}).content
+    response = chain.invoke({"marks": marks, "subject": subject})
+    return response.content
